@@ -50,6 +50,10 @@ public class AuthConfiguration {
 						.requestMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
 						.requestMatchers(HttpMethod.GET, "/piattoList").permitAll()
 						
+						.requestMatchers(HttpMethod.GET, "/recensioni").permitAll()
+						.requestMatchers(HttpMethod.POST, "/recensioni").permitAll()
+						
+						
 						.requestMatchers(HttpMethod.GET, "/login", "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/menuList").permitAll()
 						.requestMatchers(HttpMethod.GET, "/piatto/**").permitAll()

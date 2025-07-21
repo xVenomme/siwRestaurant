@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lascia una Recensione</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Bootstrap & Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/css/general.css" />
+
+  <style>
+    /* Star rating */
+    .rating-stars input[type="radio"] {
+      display: none;
+    }
+    .rating-stars label {
+      font-size: 2rem;
+      color: #e5e7eb; /* gray‑300 */
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .rating-stars input[type="radio"]:checked ~ label,
+    .rating-stars label:hover,
+    .rating-stars label:hover ~ label {
+      color: #fbbf24; /* amber‑400 */
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">SiwRestaurant</a>
+
+  <div class="ml-auto">
+    <span sec:authorize="!isAuthenticated()">
+      <a href="/login" class="btn btn-outline-light btn-sm">Accedi</a>
+      <a href="/register" class="btn btn-outline-light btn-sm ml-2">Registrati</a>
+    </span>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="d-inline">
+      <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+    </form>
+  </div>
+</nav>
+
+<!-- FORM -->
+<div class="container py-5">
+  <h1 class="mb-4 text-center">Lascia una Recensione</h1>
+
+  <form th:action="@{/reviews}" th:object="${review}" method="post" class="needs-validation" novalidate>
+
+    <!-- CSRF token -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Titolo</label>
+      <input type="text" th:field="*{title}" id="title" class="form-control" placeholder="Titolo della recensione" required/>
+      <div class="invalid-feedback">Il titolo è obbligatorio.</div>
+    </div>
+
+    <!-- Rating -->
+    <div class="form-group">
+      <label class="d-block mb-2">Valutazione</label>
+      <!-- Sequenza 5→1 per gestire le pseudo‑classi CSS correttamente -->
+      <div class="rating-stars d-flex flex-row-reverse justify-content-center" required>
+        <th:block th:each="star : ${#numbers.sequence(5,1)}">
+          <input th:id="'star' + ${star}" th:value="${star}" th:field="*{rating}" type="radio" />
+          <label th:for="'star' + ${star}" class="mx-1">★</label>
+        </th:block>
+      </div>
+      <div class="invalid-feedback text-center">Seleziona una valutazione.</div>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="content">Testo</label>
+      <textarea th:field="*{content}" id="content" rows="5" class="form-control" placeholder="Scrivi qui la tua esperienza..." required></textarea>
+      <div class="invalid-feedback">Il contenuto non può essere vuoto.</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-gradient px-5 py-2 mr-2">Invia</button>
+      <a href="/" class="btn btn-secondary">Annulla</a>
+    </div>
+  </form>
+</div>
+
+<!-- Client‑side validation -->
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+    Array.prototype.forEach.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
+</body>
+</html>
