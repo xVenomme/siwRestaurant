@@ -31,7 +31,7 @@ public class Review {
     private User user;
 
     @ManyToOne
-    private Piatto restaurant;
+    private Piatto piatto;
 
     public Review() {}
 
@@ -77,11 +77,11 @@ public class Review {
         this.user = user;
     }
 
-    public Piatto getRestaurant() {
-        return restaurant;
+    public Piatto getPiatto() {
+        return piatto;
     }
 
-    public void setRestaurant(Piatto restaurant) {
-        this.restaurant = restaurant;
+    public void setPiatto(Piatto piatto) {
+        this.piatto = piatto;
     }
 }

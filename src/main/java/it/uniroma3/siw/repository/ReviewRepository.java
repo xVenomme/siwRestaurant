@@ -10,9 +10,9 @@ import it.uniroma3.siw.model.User;
 
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
-    List<Review> findByBook(Piatto restaurant);
+    List<Review> findByPiatto(Piatto restaurant);
     
-    boolean existsByUserAndBook(User user, Piatto restaurant);
+    boolean existsByUserAndPiatto(User user, Piatto restaurant);
 
 }
 

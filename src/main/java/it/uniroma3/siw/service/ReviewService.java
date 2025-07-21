@@ -17,8 +17,8 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public List<Review> findByBook(Piatto restaurant) {
-        return reviewRepository.findByBook(restaurant);
+    public List<Review> findByPiatto(Piatto restaurant) {
+        return reviewRepository.findByPiatto(restaurant);
     }
 
     public Review findById(Long id) {
@@ -39,7 +39,7 @@ public class ReviewService {
     }
     
     public boolean hasUserReviewedBook(User user, Piatto restaurant) {
-        return reviewRepository.existsByUserAndBook(user, restaurant);
+        return reviewRepository.existsByUserAndPiatto(user, restaurant);
     }
 
 }

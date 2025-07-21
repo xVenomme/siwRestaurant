@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Siw Restaurant | Benvenuti</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Font & base stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  
+  <!-- Il tuo foglio di stile principale -->
+  <link rel="stylesheet" href="/css/general.css" />
+
+  <!-- Estensioni / override -->
+  <style>
+    /* Hero (titolo ristorante sovrapposto all'header) */
+    .hero {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .hero p {
+      margin: 0.5rem 0 0 0;
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    nav.primary-nav {
+      position: absolute;
+      right: 2rem;
+      top: 1.5rem;
+    }
+
+    nav.primary-nav a {
+      margin: 0 8px;
+      color: #fff;
+    }
+
+    nav.primary-nav a.button-ghost {
+      border: 2px solid #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    /* Sezione highlight */
+    section.highlight {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 4px 22px rgba(44, 62, 80, 0.08);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    footer.site-footer {
+      text-align: center;
+      padding: 2rem 0 1rem 0;
+      font-size: 0.95rem;
+      color: rgba(35, 39, 47, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="primary-nav">
+      <a href="#menu">Menù</a>
+      <a href="#prenotazioni">Prenota</a>
+      <a href="#recensioni">Recensioni</a>
+      <a href="/login" class="button-ghost">Accedi</a>
+	  <a href="/register" class="button-ghost">Registrati</a>
+    </nav>
+
+    <div class="hero">
+      <h1>Siw&nbsp;Restaurant</h1>
+      <p>Tradizione italiana dal&nbsp;1985</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Sezione menù -->
+    <section id="menu" class="container">
+      <h2 class="page-title">I nostri Menù</h2>
+      <section class="highlight">
+        <article class="card">
+          <h3>Menù Adulti</h3>
+          <p>Un percorso di sapori che esalta la cucina romana con un twist contemporaneo.</p>
+          <a class="button" href="/menu/adulti">Scopri di più</a>
+        </article>
+        <article class="card">
+          <h3>Menù Bambini</h3>
+          <p>Piatti gustosi e bilanciati che faranno felici i più piccoli (e i genitori).</p>
+          <a class="button" href="/menu/bambini">Scopri di più</a>
+        </article>
+        <article class="card">
+          <h3>Menù della Domenica</h3>
+          <p>La nostra selezione speciale per il pranzo festivo: tradizione, famiglia e convivialità.</p>
+          <a class="button" href="/menu/domenica">Scopri di più</a>
+        </article>
+      </section>
+    </section>
+
+    <!-- Sezione prenotazioni -->
+    <section id="prenotazioni" class="container">
+      <h2 class="page-title">Prenota un Tavolo</h2>
+      <p>Prenota online in pochi click: scegli la data, l’orario e il numero di coperti.</p>
+      <a class="button" href="/prenota">Prenota ora</a>
+    </section>
+
+    <!-- Sezione recensioni -->
+    <section id="recensioni" class="container">
+      <h2 class="page-title">Le Vostre Recensioni</h2>
+      <ul>
+        <li>
+          <span><strong>Giulia R.</strong> ★★★★★</span>
+          <span>“Un’esperienza indimenticabile, piatti eccezionali e staff gentilissimo.”</span>
+        </li>
+        <li>
+          <span><strong>Luca P.</strong> ★★★★☆</span>
+          <span>“Ottima carbonara e location suggestiva nel centro storico.”</span>
+        </li>
+        <li>
+          <span><strong>Martina L.</strong> ★★★★★</span>
+          <span>“Menù bimbi perfetto: nostro figlio è rimasto entusiasta!”</span>
+        </li>
+      </ul>
+      <a class="button" href="/recensioni">Lascia la tua recensione</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2025 Siw&nbsp;Restaurant — Tutti i diritti riservati
+  </footer>
+</body>
+</html>

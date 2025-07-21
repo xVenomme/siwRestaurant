@@ -30,51 +30,51 @@ public class ReviewController {
     // Mostra form per aggiungere recensione
     @GetMapping("/restaurant/{id}/review")
     public String showReviewForm(@PathVariable("id") Long restaurantId, Model model) {
-        Piatto restaurant = restaurantService.findById(restaurantId);
+        Piatto piatto = restaurantService.findById(restaurantId);
         User user = userService.getCurrentUser();
 
-        if (restaurant == null || user == null) {
+        if (piatto == null || user == null) {
             return "redirect:/restaurant/" + restaurantId;
         }
 
         model.addAttribute("review", new Review());
-        model.addAttribute("restaurant", restaurant);
+        model.addAttribute("piatto", piatto);
         return "review/formReview";
     }
     
     @PostMapping("/admin/reviews/{id}/delete")
     @PreAuthorize("hasAuthority('ADMIN')")   // oppure hasRole("ADMIN") se usi ROLE_
     public String deleteReview(@PathVariable Long id,
-                               @RequestParam Long restaurantId) {
+                               @RequestParam Long piattoId) {
         reviewService.deleteById(id);   // implementa nel service
-        return "redirect:/restaurant/" + restaurantId;
+        return "redirect:/piatto/" + piattoId;
     }
 
     
 
     // Salva recensione
-    @PostMapping("/restaurant/{id}/review")
-    public String submitReview(@PathVariable("id") Long restaurantId, 
+    @PostMapping("/piatto/{id}/review")
+    public String submitReview(@PathVariable("id") Long piattoId, 
                                @Valid @ModelAttribute("review") Review review,
                                BindingResult bindingResult,
                                Model model) {
 
-        Piatto restaurant = restaurantService.findById(restaurantId);
+        Piatto piatto = restaurantService.findById(piattoId);
         User currentUser = userService.getCurrentUser();
 
-        if (restaurant == null || currentUser == null) {
+        if (piatto == null || currentUser == null) {
             return "redirect:/restaurantList";
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("restaurant", restaurant);
+            model.addAttribute("piatto", piatto);
             return "review/formReview";
         }
 
-        review.setRestaurant(restaurant);
+        review.setPiatto(piatto);
         review.setUser(currentUser);
         review.setId(null); // forza Hibernate a salvarne una nuova
         reviewService.save(review);
-        return "redirect:/restaurant/" + restaurantId;
+        return "redirect:/restaurant/" + piattoId;
     }
 }
