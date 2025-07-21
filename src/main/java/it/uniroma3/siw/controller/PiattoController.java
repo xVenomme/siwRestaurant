@@ -38,6 +38,17 @@ public class PiattoController {
         piattoService.saveWithImage(piatto, file);
         return "redirect:/piatto/tuttiPiatti";   // <-- URL completo
     }
+    
+    @PostMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('ADMIN_ROLE')")   // o il tuo ruolo reale
+    public String deletePiatto(@PathVariable Long id,
+                               @RequestHeader(value = "Referer", required = false) String ref) {
+
+        piattoService.deleteById(id);
+        return (ref != null) ? "redirect:" + ref
+                             : "redirect:/piatto/tuttiPiatti";
+    }
+
 
     @GetMapping("/tuttiPiatti")
     public String mostraTuttiPiatti(Model model){

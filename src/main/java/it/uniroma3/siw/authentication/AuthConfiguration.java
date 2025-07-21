@@ -62,6 +62,7 @@ public class AuthConfiguration {
 						.requestMatchers(HttpMethod.GET,  "/piatto/formPiatto").hasAuthority(User.ADMIN_ROLE)
 						.requestMatchers(HttpMethod.POST, "/piatto").hasAuthority(User.ADMIN_ROLE)
 
+						.requestMatchers(HttpMethod.POST, "/piatto/*/delete").hasAuthority(User.ADMIN_ROLE)
 
 					    
 						
