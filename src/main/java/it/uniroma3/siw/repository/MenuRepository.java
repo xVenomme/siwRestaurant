@@ -6,5 +6,5 @@ import it.uniroma3.siw.model.Menu;
 import it.uniroma3.siw.model.MenuTipo;
 
 public interface MenuRepository extends CrudRepository<Menu, Long> {
-    Iterable<Menu> findByTipo(MenuTipo tipo);
+    Menu findByTipo(MenuTipo tipo);
 }
