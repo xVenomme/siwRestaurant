@@ -1,0 +1,19 @@
+<!-- templates/menu_detail.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Dettagli Menù - ' + ${menu.nome}">Dettagli Menù</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <h1 th:text="${menu.nome}">Nome Menù</h1>
+    <p><strong>Tipo:</strong> <span th:text="${menu.tipo}">PRANZO</span></p>
+    <p><strong>Prezzo Totale:</strong> <span th:text="${#numbers.formatDecimal(menu.prezzoTotale,1,'POINT',2,'NONE')} + ' €'">0.00 €</span></p>
+    <h2>Piatti Inclusi</h2>
+    <ul>
+        <li th:each="p : ${menu.piatti}" th:text="${p.nome + ' - ' + #numbers.formatDecimal(p.prezzo,1,'POINT',2,'NONE') + ' €'}">Piatto</li>
+    </ul>
+    <a th:href="@{/menu}">Torna all'elenco</a>
+</body>
+</html>

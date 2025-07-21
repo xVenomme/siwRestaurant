@@ -16,9 +16,6 @@ public class Menu {
     @NotBlank
     private String nome;
 
-    @Enumerated(EnumType.STRING)
-    private MenuTipo tipo;
-
     @ManyToMany
     @JoinTable(
         name = "menu_piatto",
@@ -31,11 +28,6 @@ public class Menu {
 
     /* --- costruttori --- */
     public Menu() { }
-
-    public Menu(String nome, MenuTipo tipo) {
-        this.nome = nome;
-        this.tipo = tipo;
-    }
 
     /* --- business helper --- */
     public void addPiatto(Piatto p) {
@@ -58,14 +50,6 @@ public class Menu {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public MenuTipo getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(MenuTipo tipo) {
-		this.tipo = tipo;
 	}
 
 	public List<Piatto> getPiatti() {
