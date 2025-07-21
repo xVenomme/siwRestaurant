@@ -1,20 +1,23 @@
 package it.uniroma3.siw.controller;
 
-import it.uniroma3.siw.model.*;
-import it.uniroma3.siw.service.*;
+import it.uniroma3.siw.model.Review;
+import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.service.ReviewService;
+import it.uniroma3.siw.service.UserService;
 
-import java.security.Principal;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
+import java.util.List;
 
+/**
+ * Home page + gestione delle recensioni generali del ristorante.
+ */
 @Controller
 public class ReviewController {
 
@@ -22,59 +25,42 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @Autowired
-    private PiattoService restaurantService;
-
-    @Autowired
     private UserService userService;
 
-    // Mostra form per aggiungere recensione
-    @GetMapping("/restaurant/{id}/review")
-    public String showReviewForm(@PathVariable("id") Long restaurantId, Model model) {
-        Piatto piatto = restaurantService.findById(restaurantId);
-        User user = userService.getCurrentUser();
+ 
 
-        if (piatto == null || user == null) {
-            return "redirect:/restaurant/" + restaurantId;
-        }
-
+    /* ---------------------- FORM NUOVA RECENSIONE ---------------------- */
+    @GetMapping("/reviews/new")
+    @PreAuthorize("isAuthenticated()")
+    public String showNewReviewForm(Model model) {
         model.addAttribute("review", new Review());
-        model.addAttribute("piatto", piatto);
-        return "review/formReview";
-    }
-    
-    @PostMapping("/admin/reviews/{id}/delete")
-    @PreAuthorize("hasAuthority('ADMIN')")   // oppure hasRole("ADMIN") se usi ROLE_
-    public String deleteReview(@PathVariable Long id,
-                               @RequestParam Long piattoId) {
-        reviewService.deleteById(id);   // implementa nel service
-        return "redirect:/piatto/" + piattoId;
+        return "recensioni";          // template del form
     }
 
-    
+    /* ---------------------- SALVATAGGIO RECENSIONE -------------------- */
+    @PostMapping("/reviews")
+    @PreAuthorize("isAuthenticated()")
+    public String submitReview(@Valid @ModelAttribute("review") Review review,
+                               BindingResult bindingResult) {
 
-    // Salva recensione
-    @PostMapping("/piatto/{id}/review")
-    public String submitReview(@PathVariable("id") Long piattoId, 
-                               @Valid @ModelAttribute("review") Review review,
-                               BindingResult bindingResult,
-                               Model model) {
+        if (bindingResult.hasErrors())
+            return "recensioni";
 
-        Piatto piatto = restaurantService.findById(piattoId);
         User currentUser = userService.getCurrentUser();
-
-        if (piatto == null || currentUser == null) {
-            return "redirect:/restaurantList";
-        }
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("piatto", piatto);
-            return "review/formReview";
-        }
-
-        review.setPiatto(piatto);
         review.setUser(currentUser);
-        review.setId(null); // forza Hibernate a salvarne una nuova
         reviewService.save(review);
-        return "redirect:/restaurant/" + piattoId;
+
+        return "redirect:/#recensioni";   // torna alla home con ancora ‘latestReviews’
+    }
+
+    /* ---------------------- CANCELLAZIONE (ADMIN) --------------------- */
+    @PostMapping("/reviews/{id}/delete")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String deleteReview(@PathVariable Long id,
+                               @RequestHeader(value = "Referer", required = false) String referrer) {
+
+        reviewService.deleteById(id);
+        return (referrer != null) ? "redirect:" + referrer
+                                  : "redirect:/#recensioni";
     }
 }

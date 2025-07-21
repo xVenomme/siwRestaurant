@@ -20,6 +20,7 @@ public class Review {
     @NotBlank
     private String title;
 
+    @NotNull 
     @Min(1)
     @Max(5)
     private int rating; // ✅ cambiato da "vote" a "rating"
@@ -30,8 +31,6 @@ public class Review {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Piatto piatto;
 
     public Review() {}
 
@@ -77,11 +76,5 @@ public class Review {
         this.user = user;
     }
 
-    public Piatto getPiatto() {
-        return piatto;
-    }
-
-    public void setPiatto(Piatto piatto) {
-        this.piatto = piatto;
-    }
+  
 }

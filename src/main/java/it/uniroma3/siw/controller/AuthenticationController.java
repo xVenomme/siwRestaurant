@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,20 +13,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.ReviewService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
 
 @Controller
 public class AuthenticationController {
-	
+
 	@Autowired
 	private CredentialsService credentialsService;
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ReviewService reviewService;
+
 
 	@GetMapping(value = "/register")
 	public String showRegisterForm(Model model) {
@@ -32,7 +40,7 @@ public class AuthenticationController {
 		model.addAttribute("credentials", new Credentials());
 		return "formRegister.html";
 	}
-	
+
 	@GetMapping(value = "/login")
 	public String showLoginForm(Model model, Authentication authentication) {
 		if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
@@ -42,6 +50,8 @@ public class AuthenticationController {
 			return "formLogin.html";
 		}
 	}
+
+
 
 	@GetMapping(value = "/")
 	public String homePage(Model model) {
@@ -54,28 +64,29 @@ public class AuthenticationController {
 		else{
 			model.addAttribute("isAdmin", false);
 		}
-
+		List<Review> latest = reviewService.findLatest(3);   // ultime 3
+		model.addAttribute("latestReviews", latest);
 		return "homePage.html";
 	}
-		
-    @GetMapping(value = "/success")
-    public String defaultAfterLogin(Model model, Authentication authentication) {
-        return homePage(model);
-    }
+
+	@GetMapping(value = "/success")
+	public String defaultAfterLogin(Model model, Authentication authentication) {
+		return homePage(model);
+	}
 
 	@GetMapping(value = "/error")
-    public String error(Model model) {
-        return "error.html";
-    }
+	public String error(Model model) {
+		return "error.html";
+	}
 
 	@PostMapping(value = "/register")
-    public String registerUser(@Valid @ModelAttribute User user,
-		BindingResult userBindingResult,
-		@Valid @ModelAttribute Credentials credentials,
-		BindingResult credentialsBindingResult,
-		Model model) {
+	public String registerUser(@Valid @ModelAttribute User user,
+			BindingResult userBindingResult,
+			@Valid @ModelAttribute Credentials credentials,
+			BindingResult credentialsBindingResult,
+			Model model) {
 
-        if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
+		if(!userBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
 			user.setId(userService.getMaxId() + 1);
 			credentials.setId(credentialsService.getMaxId() + 1);
 			credentials.setUser(user);
@@ -85,10 +96,10 @@ public class AuthenticationController {
 			this.userService.setCurrentUser(user);
 			model.addAttribute("user", user);
 			return "redirect:/login";
-        }
-        return "formRegister.html";
-    }
-	
-	
-	
+		}
+		return "formRegister.html";
+	}
+
+
+
 }

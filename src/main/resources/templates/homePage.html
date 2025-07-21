@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8" />
   <title>Siw Restaurant | Benvenuti</title>
@@ -16,81 +16,26 @@
   <!-- Estensioni / override -->
   <style>
     /* Hero (titolo ristorante sovrapposto all'header) */
-    .hero {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      pointer-events: none;
-    }
+    .hero { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+    .hero h1{ font-size:3.5rem; letter-spacing:.05em; background:linear-gradient(90deg,#fff 0%,#c7d2fe 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0; }
+    .hero p{ margin:.5rem 0 0 0; font-size:1.25rem; color:rgba(255,255,255,.9); }
 
-    .hero h1 {
-      font-size: 3.5rem;
-      letter-spacing: 0.05em;
-      background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-    }
-
-    .hero p {
-      margin: 0.5rem 0 0 0;
-      font-size: 1.25rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    nav.primary-nav {
-      position: absolute;
-      right: 2rem;
-      top: 1.5rem;
-    }
-
-    nav.primary-nav a {
-      margin: 0 8px;
-      color: #fff;
-    }
-
-    nav.primary-nav a.button-ghost {
-      border: 2px solid #fff;
-      padding: 8px 16px;
-      border-radius: 8px;
-    }
+    nav.primary-nav{ position:absolute; right:2rem; top:1.5rem; }
+    nav.primary-nav a{ margin:0 8px; color:#fff; }
+    nav.primary-nav a.button-ghost, nav.primary-nav button.button-ghost{ border:2px solid #fff; padding:8px 16px; border-radius:8px; background:transparent; color:#fff; font-weight:600; font-size:1rem; cursor:pointer; transition:opacity .15s; }
+    nav.primary-nav a.button-ghost:hover, nav.primary-nav button.button-ghost:hover{ opacity:.85; }
 
     /* Sezione highlight */
-    section.highlight {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.8rem;
-    }
+    section.highlight{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.8rem; }
+    .card{ background:rgba(255,255,255,.97); border-radius:16px; padding:2rem 1.5rem; box-shadow:0 4px 22px rgba(44,62,80,.08); transition:transform .2s; }
+    .card:hover{ transform:translateY(-4px); }
+    .card h3{ margin-top:0; margin-bottom:.8rem; font-size:1.4rem; background:linear-gradient(90deg,#3b82f6 0%,#6366f1 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-    .card {
-      background: rgba(255, 255, 255, 0.97);
-      border-radius: 16px;
-      padding: 2rem 1.5rem;
-      box-shadow: 0 4px 22px rgba(44, 62, 80, 0.08);
-      transition: transform 0.2s;
-    }
+    footer.site-footer{ text-align:center; padding:2rem 0 1rem 0; font-size:.95rem; color:rgba(35,39,47,.7); }
 
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      margin-bottom: 0.8rem;
-      font-size: 1.4rem;
-      background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    footer.site-footer {
-      text-align: center;
-      padding: 2rem 0 1rem 0;
-      font-size: 0.95rem;
-      color: rgba(35, 39, 47, 0.7);
-    }
+    /* Recensioni */
+    .reviews-list li{ background:linear-gradient(90deg,#f1f3f7 80%,#e0e7ef 100%); margin-bottom:14px; padding:18px 22px; border-radius:10px; box-shadow:0 2px 10px rgba(44,62,80,.06); display:flex; flex-direction:column; }
+    .reviews-list li span:first-child{ margin-bottom:6px; }
   </style>
 </head>
 <body>
@@ -99,8 +44,17 @@
       <a href="#menu">Menù</a>
       <a href="#prenotazioni">Prenota</a>
       <a href="#recensioni">Recensioni</a>
-      <a href="/login" class="button-ghost">Accedi</a>
-	  <a href="/register" class="button-ghost">Registrati</a>
+
+      <!-- Pulsanti visibili solo agli utenti NON autenticati -->
+      <span sec:authorize="!isAuthenticated()">
+        <a href="/login" class="button-ghost">Accedi</a>
+        <a href="/register" class="button-ghost">Registrati</a>
+      </span>
+
+      <!-- Logout -->
+      <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit" class="button-ghost">Logout</button>
+      </form>
     </nav>
 
     <div class="hero">
@@ -139,24 +93,29 @@
       <a class="button" href="/prenota">Prenota ora</a>
     </section>
 
-    <!-- Sezione recensioni -->
+    <!-- Sezione recensioni dinamica -->
     <section id="recensioni" class="container">
-      <h2 class="page-title">Le Vostre Recensioni</h2>
-      <ul>
-        <li>
-          <span><strong>Giulia R.</strong> ★★★★★</span>
-          <span>“Un’esperienza indimenticabile, piatti eccezionali e staff gentilissimo.”</span>
-        </li>
-        <li>
-          <span><strong>Luca P.</strong> ★★★★☆</span>
-          <span>“Ottima carbonara e location suggestiva nel centro storico.”</span>
-        </li>
-        <li>
-          <span><strong>Martina L.</strong> ★★★★★</span>
-          <span>“Menù bimbi perfetto: nostro figlio è rimasto entusiasta!”</span>
+      <h2 class="page-title">Le Ultime Recensioni</h2>
+
+      <!-- Messaggio se non ci sono recensioni -->
+      <ul class="reviews-list" th:if="${#lists.isEmpty(latestReviews)}">
+        <li class="empty-msg">Non ci sono ancora recensioni, sii il primo!</li>
+      </ul>
+
+      <!-- Lista ultime recensioni -->
+      <ul class="reviews-list" th:if="${!#lists.isEmpty(latestReviews)}">
+        <li th:each="rev : ${latestReviews}">
+          <span>
+            <strong th:text="${rev.user.username}">Utente</strong>
+            <span th:utext="${#strings.repeat('★', rev.rating)} + ${#strings.repeat('☆', 5 - rev.rating)}">★★★★★</span>
+          </span>
+          <span th:text="${rev.content}">Commento</span>
         </li>
       </ul>
-      <a class="button" href="/recensioni">Lascia la tua recensione</a>
+
+      <!-- CTA -->
+      <a class="button" href="/reviews/new" sec:authorize="isAuthenticated()">Lascia la tua recensione</a>
+      <a class="button" href="/login" sec:authorize="!isAuthenticated()">Accedi per recensire</a>
     </section>
   </main>
 
