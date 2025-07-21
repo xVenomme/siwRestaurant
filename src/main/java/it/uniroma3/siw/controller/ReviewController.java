@@ -22,47 +22,52 @@ import java.util.List;
 public class ReviewController {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewService reviewService;   // fornisce findLatest() e findAll() :contentReference[oaicite:0]{index=0}
 
     @Autowired
     private UserService userService;
 
- 
+    // --- Nuovo: popola la home con le ultime 5 recensioni ---
+    @GetMapping("/home")
+    public String showHome(Model model) {
+        model.addAttribute("latestReviews", reviewService.findLatest(5));
+        return "index";   // nome del template di home
+    }
 
-    /* ---------------------- FORM NUOVA RECENSIONE ---------------------- */
+    // --- Nuovo: mostra tutte le recensioni in una pagina dedicata ---
+    @GetMapping("/reviews")
+    public String showAllReviews(Model model) {
+        model.addAttribute("reviews", reviewService.findAll());
+        return "reviews-list";   // template che creerai sotto
+    }
+
+    /* Esistenti: form nuova recensione, salvataggio e cancellazione */
     @GetMapping("/reviews/new")
     @PreAuthorize("isAuthenticated()")
     public String showNewReviewForm(Model model) {
         model.addAttribute("review", new Review());
-        return "recensioni";          // template del form
+        return "recensioni";    // template del form :contentReference[oaicite:1]{index=1}
     }
 
-    /* ---------------------- SALVATAGGIO RECENSIONE -------------------- */
     @PostMapping("/reviews")
     @PreAuthorize("isAuthenticated()")
     public String submitReview(@Valid @ModelAttribute("review") Review review,
                                BindingResult bindingResult) {
-
         if (bindingResult.hasErrors())
             return "recensioni";
 
-        User currentUser = userService.getCurrentUser();
-        review.setUser(currentUser);
+        review.setUser(userService.getCurrentUser());
         reviewService.save(review);
-
-        return "redirect:/#recensioni";   // torna alla home con ancora ‘latestReviews’
+        return "redirect:/#recensioni";
     }
 
-    /* ---------------------- CANCELLAZIONE (ADMIN) --------------------- */
     @PostMapping("/reviews/{id}/delete")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteReview(@PathVariable Long id,
                                @RequestHeader(value = "Referer", required = false) String referrer) {
-
         reviewService.deleteById(id);
         return (referrer != null) ? "redirect:" + referrer
                                   : "redirect:/#recensioni";
     }
-    
-    
 }
+

@@ -115,37 +115,36 @@
 	</section>
 
 
-    <!-- Sezione recensioni dinamica -->
-    <section id="recensioni" class="container">
-      <h2 class="page-title">Le Ultime Recensioni</h2>
+  <!-- Sezione recensioni dinamica -->
+ <section id="recensioni" class="container">
+  <h2 class="page-title">Le Ultime Recensioni</h2>
 
-      <!-- Messaggio se non ci sono recensioni -->
-      <ul class="reviews-list" th:if="${#lists.isEmpty(latestReviews)}">
-        <li class="empty-msg">Non ci sono ancora recensioni, sii il primo!</li>
-      </ul>
+  <!-- Messaggio se non ci sono recensioni -->
+  <ul class="reviews-list" th:if="${#lists.isEmpty(latestReviews)}">
+    <li class="empty-msg">Non ci sono ancora recensioni, sii il primo!</li>
+  </ul>
 
-      <!-- Lista ultime recensioni -->
-      <ul class="reviews-list" th:if="${!#lists.isEmpty(latestReviews)}">
-        <li th:each="rev : ${latestReviews}">
-          <span>
-            <strong th:text="${rev.user.username}">Utente</strong>
-            <span th:utext="${#strings.repeat('★', rev.rating)} + ${#strings.repeat('☆', 5 - rev.rating)}">★★★★★</span>
-          </span>
-          <span th:text="${rev.content}">Commento</span>
-		  <form class="admin-del" sec:authorize="hasAuthority('ADMIN')"
-		               th:action="@{'/reviews/' + ${rev.id} + '/delete'}" method="post"
-		               onsubmit="return confirm('Eliminare la recensione?');">
-		           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-		           <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
-		         </form>
-        </li>
-      </ul>
+  <!-- Lista ultime recensioni -->
+  <ul class="reviews-list" th:if="${!#lists.isEmpty(latestReviews)}">
+    <li th:each="rev : ${latestReviews}">
+      <span>
+        <strong th:text="${rev.user.username}">Utente</strong>
+        <span th:utext="${#strings.repeat('★', rev.rating)} + ${#strings.repeat('☆', 5 - rev.rating)}">★★★★★</span>
+      </span>
+      <span th:text="${rev.content}">Commento</span>
+      <!-- (eventuali form di delete/edit qui) -->
+    </li>
+  </ul>
 
-      <!-- CTA -->
-      <a class="button" href="/reviews/new" sec:authorize="isAuthenticated()">Lascia la tua recensione</a>
-      <a class="button" href="/login" sec:authorize="!isAuthenticated()">Accedi per recensire</a>
-    </section>
-  </main>
+  <!-- Link a tutte le recensioni -->
+  <a class="button" th:href="@{/reviews}">Vedi tutte le recensioni</a>
+
+  <!-- CTA esistenti -->
+  <a class="button" href="/reviews/new" sec:authorize="isAuthenticated()">Lascia la tua recensione</a>
+  <a class="button" href="/login" sec:authorize="!isAuthenticated()">Accedi per recensire</a>
+</section>
+
+</main>
 
   <footer class="site-footer">
     © 2025 Siw&nbsp;Restaurant — Tutti i diritti riservati

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tutte le Recensioni</title>
+  <link rel="stylesheet" href="/css/general.css" />
+</head>
+<body>
+  <div class="container reviews-page">
+    <h1 class="page-title">Tutte le Recensioni</h1>
+
+    <table class="reviews-table">
+      <thead>
+        <tr>
+          <th>Utente</th>
+          <th>Titolo</th>
+          <th>Voto</th>
+          <th>Commento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="review : ${reviews}">
+          <td th:text="${review.user.username}">username</td>
+          <td th:text="${review.title}">Titolo recensione</td>
+          <td>
+            <span th:utext="${#strings.repeat('★', review.rating)} + ${#strings.repeat('☆', 5 - review.rating)}">★★★★★</span>
+          </td>
+          <td th:text="${review.content}">Testo recensione...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="reviews-actions">
+      <a class="button" th:href="@{/}">← Torna alla Home</a>
+    </div>
+  </div>
+</body>
+</html>
