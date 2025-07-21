@@ -53,6 +53,8 @@ public class AuthConfiguration {
 						.requestMatchers(HttpMethod.GET, "/recensioni").permitAll()
 						.requestMatchers(HttpMethod.POST, "/recensioni").permitAll()
 						
+						
+						
 						// può salvare la recensione chiunque sia loggato
 						.requestMatchers(HttpMethod.POST, "/reviews").authenticated()
 
@@ -73,7 +75,8 @@ public class AuthConfiguration {
 						
 						.requestMatchers(HttpMethod.GET , "/prenotazioni/mie").authenticated()
 						.requestMatchers(HttpMethod.POST, "/prenotazioni/*/delete").authenticated()
-
+						.requestMatchers(HttpMethod.GET, "/menu/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/menuList").permitAll()
 						
 						.requestMatchers(HttpMethod.GET, "/login", "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/menuList").permitAll()
