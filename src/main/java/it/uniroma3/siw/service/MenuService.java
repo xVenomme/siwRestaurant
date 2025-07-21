@@ -4,6 +4,7 @@ import it.uniroma3.siw.model.Menu;
 import it.uniroma3.siw.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class MenuService {
         return menuRepository.findAll();     // JpaRepository restituisce già List<Menu>
     }
 
+    @Transactional(readOnly = true)
     public Menu getById(Long id) {
         return menuRepository.findById(id).orElse(null);
     }
