@@ -4,68 +4,153 @@
   <meta charset="UTF-8" />
   <title>Siw Restaurant | Benvenuti</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Font & base stylesheet -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  
+  <!-- Il tuo foglio di stile principale -->
   <link rel="stylesheet" href="/css/general.css" />
+
+  <!-- Estensioni / override -->
   <style>
-    .hero{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-    .hero h1{font-size:3.5rem;letter-spacing:.05em;background:linear-gradient(90deg,#fff 0%,#c7d2fe 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0}
-    .hero p{margin:.5rem 0 0;font-size:1.25rem;color:rgba(255,255,255,.9)}
-    nav.primary-nav{position:absolute;right:2rem;top:1.5rem}
-    nav.primary-nav a{margin:0 8px;color:#fff}
-    nav.primary-nav a.button-ghost,nav.primary-nav button.button-ghost{border:2px solid #fff;padding:8px 16px;border-radius:8px;background:transparent;color:#fff;font-weight:600;font-size:1rem;cursor:pointer;transition:opacity .15s}
-    nav.primary-nav a.button-ghost:hover,nav.primary-nav button.button-ghost:hover{opacity:.85}
-    section.highlight{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.8rem}
-    .card{background:rgba(255,255,255,.97);border-radius:16px;padding:2rem 1.5rem;box-shadow:0 4px 22px rgba(44,62,80,.08);transition:transform .2s}
-    .card:hover{transform:translateY(-4px)}
-    .card h3{margin-top:0;margin-bottom:.8rem;font-size:1.4rem;background:linear-gradient(90deg,#3b82f6 0%,#6366f1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    footer.site-footer{text-align:center;padding:2rem 0 1rem;font-size:.95rem;color:rgba(35,39,47,.7)}
-    .reviews-list li{background:linear-gradient(90deg,#f1f3f7 80%,#e0e7ef 100%);margin-bottom:14px;padding:18px 22px;border-radius:10px;box-shadow:0 2px 10px rgba(44,62,80,.06);display:flex;flex-direction:column}
-    .reviews-list li span:first-child{margin-bottom:6px}
+    /* Hero (titolo ristorante sovrapposto all'header) */
+    .hero { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+    .hero h1{ font-size:3.5rem; letter-spacing:.05em; background:linear-gradient(90deg,#fff 0%,#c7d2fe 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0; }
+    .hero p{ margin:.5rem 0 0 0; font-size:1.25rem; color:rgba(255,255,255,.9); }
+
+    nav.primary-nav{ position:absolute; right:2rem; top:1.5rem; }
+    nav.primary-nav a{ margin:0 8px; color:#fff; }
+    nav.primary-nav a.button-ghost, nav.primary-nav button.button-ghost{ border:2px solid #fff; padding:8px 16px; border-radius:8px; background:transparent; color:#fff; font-weight:600; font-size:1rem; cursor:pointer; transition:opacity .15s; }
+    nav.primary-nav a.button-ghost:hover, nav.primary-nav button.button-ghost:hover{ opacity:.85; }
+
+    /* Sezione highlight */
+    section.highlight{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.8rem; }
+    .card{ background:rgba(255,255,255,.97); border-radius:16px; padding:2rem 1.5rem; box-shadow:0 4px 22px rgba(44,62,80,.08); transition:transform .2s; }
+    .card:hover{ transform:translateY(-4px); }
+    .card h3{ margin-top:0; margin-bottom:.8rem; font-size:1.4rem; background:linear-gradient(90deg,#3b82f6 0%,#6366f1 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    footer.site-footer{ text-align:center; padding:2rem 0 1rem 0; font-size:.95rem; color:rgba(35,39,47,.7); }
+
+    /* Recensioni */
+    .reviews-list li{ background:linear-gradient(90deg,#f1f3f7 80%,#e0e7ef 100%); margin-bottom:14px; padding:18px 22px; border-radius:10px; box-shadow:0 2px 10px rgba(44,62,80,.06); display:flex; flex-direction:column; }
+    .reviews-list li span:first-child{ margin-bottom:6px; }
   </style>
 </head>
 <body>
-<header class="site-header">
-  <nav class="primary-nav">
-    <a href="#menu">Menù</a>
-    <a href="#prenotazioni">Prenota</a>
-    <a href="#recensioni">Recensioni</a>
-    <span sec:authorize="!isAuthenticated()">
-      <a href="/login" class="button-ghost">Accedi</a>
-      <a href="/register" class="button-ghost">Registrati</a>
-    </span>
-    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline">
-      <button type="submit" class="button-ghost">Logout</button>
-    </form>
-  </nav>
-  <div class="hero"><h1>Siw Restaurant</h1><p>Tradizione italiana dal 1985</p></div>
-</header>
+  <header class="site-header">
+    <nav class="primary-nav">
+      <a href="#menu">Menù</a>
+      <a href="#prenotazioni">Prenota</a>
+      <a href="#recensioni">Recensioni</a>
+		
+	  
+	  
+      <!-- Pulsanti visibili solo agli utenti NON autenticati -->
+      <span sec:authorize="!isAuthenticated()">
+        <a href="/login" class="button-ghost">Accedi</a>
+        <a href="/register" class="button-ghost">Registrati</a>
+      </span>
 
-<main>
-  <section id="menu" class="container">
-    <h2 class="page-title">I nostri Menù</h2>
-    <section class="highlight">
-      <article class="card"><h3>Menù Adulti</h3><p>Un percorso di sapori...</p><a class="button" href="/menu/adulti">Scopri di più</a></article>
-      <article class="card"><h3>Tutte le recensioni</h3><p>La tua opinione è la nostra priorità.</p><a class="button" href="/menu/recensioni">Scopri di più</a></article>
-      <article class="card"><h3>Lista dei nostri piatti</h3><p>Selezione speciale: tradizione, famiglia e convivialità.</p><a class="button" href="/piatto/tuttiPiatti">Scopri di più</a></article>
-      <article class="card" sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')"><h3>Le mie prenotazioni</h3><p>Rivedi, modifica o annulla i tavoli che hai riservato.</p><a class="button" href="/prenotazioni/mie">Scopri di più</a></article>
-      <article class="card" sec:authorize="hasAuthority('ADMIN')"><h3>Gestisci prenotazioni</h3><p>Approva o rifiuta le richieste dei clienti.</p><a class="button" href="/admin/prenotazioni">Gestisci</a></article>
+      <!-- Logout -->
+      <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit" class="button-ghost">Logout</button>
+      </form>
+    </nav>
+
+    <div class="hero">
+      <h1>Siw&nbsp;Restaurant</h1>
+      <p>Tradizione italiana dal&nbsp;1985</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Sezione menù -->
+    <section id="menu" class="container">
+      <h2 class="page-title">I nostri Menù</h2>
+      <section class="highlight">
+		
+        <article class="card">
+          <h3>Tutti i Menù </h3>
+          <p>Un percorso di sapori che esalta la cucina romana con un twist contemporaneo.</p>
+          <a class="button" href="/menu/lista">Scopri di più</a>
+        </article>
+        <article class="card">
+          <h3>Tutte le recensioni</h3>
+          <p>La tua opinione è la nostra priorità.</p>
+          <a class="button" href="/menu/recensioni">Scopri di più</a>
+        </article>
+		
+        <article class="card">
+          <h3>Lista dei nostri piatti</h3>
+          <p>La nostra selezione speciale: tradizione, famiglia e convivialità.</p>
+          <a class="button" href="/piatto/tuttiPiatti">Scopri di più</a>
+        </article>
+
+	
+				<article class="card">
+				<span class="admin-buttons" sec:authorize="hasAuthority('ADMIN')">
+				<a href="/menuList"   class="button-ghost">Modifica Menu</a>
+				</span>			
+				</article>
+				<article class="card">
+					
+														  
+										        </article>
+
+				
+      </section>
     </section>
-  </section>
 
-  <!-- Sezione prenotazioni -->
-  <section id="prenotazioni" class="container">
-    <h2 class="page-title">Prenota un Tavolo</h2>
-    <p>Prenota online in pochi click: scegli la data, l’orario e il numero di coperti.</p>
-    <a class="button" href="/prenota" sec:authorize="!hasAuthority('ADMIN')">Prenota ora</a>
-    <a class="button" href="/prenotazioni/mie" sec:authorize="isAuthenticated() and !hasAuthority('ADMIN')">Le mie prenotazioni</a>
-    <a class="button" href="/admin/prenotazioni" sec:authorize="hasAuthority('ADMIN')">Gestisci prenotazioni</a>
-  </section>
+	<!-- Sezione prenotazioni -->
+	<section id="prenotazioni" class="container">
+	  <h2 class="page-title">Prenota un Tavolo</h2>
+	  <p>Prenota online in pochi click: scegli la data, l’orario e il numero di coperti.</p>
 
-  <!-- Sezione recensioni dinamica -->
-  <!-- ... (non modificata) ... -->
-</main>
-<footer class="site-footer">© 2025 Siw Restaurant — Tutti i diritti riservati</footer>
+	  <!-- CTA principali -->
+	  <a class="button" href="/prenota">Prenota ora</a>
+
+	  <!-- Link alle prenotazioni personali – soltanto se loggato -->
+	  <a class="button" href="/prenotazioni/mie"
+	     sec:authorize="isAuthenticated()">Le mie prenotazioni</a>
+	</section>
+
+
+    <!-- Sezione recensioni dinamica -->
+    <section id="recensioni" class="container">
+      <h2 class="page-title">Le Ultime Recensioni</h2>
+
+      <!-- Messaggio se non ci sono recensioni -->
+      <ul class="reviews-list" th:if="${#lists.isEmpty(latestReviews)}">
+        <li class="empty-msg">Non ci sono ancora recensioni, sii il primo!</li>
+      </ul>
+
+      <!-- Lista ultime recensioni -->
+      <ul class="reviews-list" th:if="${!#lists.isEmpty(latestReviews)}">
+        <li th:each="rev : ${latestReviews}">
+          <span>
+            <strong th:text="${rev.user.username}">Utente</strong>
+            <span th:utext="${#strings.repeat('★', rev.rating)} + ${#strings.repeat('☆', 5 - rev.rating)}">★★★★★</span>
+          </span>
+          <span th:text="${rev.content}">Commento</span>
+		  <form class="admin-del" sec:authorize="hasAuthority('ADMIN')"
+		               th:action="@{'/reviews/' + ${rev.id} + '/delete'}" method="post"
+		               onsubmit="return confirm('Eliminare la recensione?');">
+		           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		           <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
+		         </form>
+        </li>
+      </ul>
+
+      <!-- CTA -->
+      <a class="button" href="/reviews/new" sec:authorize="isAuthenticated()">Lascia la tua recensione</a>
+      <a class="button" href="/login" sec:authorize="!isAuthenticated()">Accedi per recensire</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2025 Siw&nbsp;Restaurant — Tutti i diritti riservati
+  </footer>
 </body>
 </html>

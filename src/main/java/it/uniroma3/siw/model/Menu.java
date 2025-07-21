@@ -24,6 +24,10 @@ public class Menu {
     )
     private List<Piatto> piatti = new ArrayList<>();
 
+    private String descrizione;   
+
+    
+    
     private BigDecimal prezzoTotale;
 
     /* --- costruttori --- */
@@ -50,6 +54,14 @@ public class Menu {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	public List<Piatto> getPiatti() {
