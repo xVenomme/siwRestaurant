@@ -16,6 +16,7 @@
           <th>Titolo</th>
           <th>Voto</th>
           <th>Commento</th>
+          <th>Azioni</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,12 @@
             <span th:utext="${#strings.repeat('★', review.rating)} + ${#strings.repeat('☆', 5 - review.rating)}">★★★★★</span>
           </td>
           <td th:text="${review.content}">Testo recensione...</td>
+          <td sec:authorize="hasAuthority('ADMIN')">
+            <form th:action="@{'/reviews/' + ${review.id} + '/delete'}" method="post" 
+                  onsubmit="return confirm('Sei sicuro di eliminare questa recensione?');">
+              <button type="submit" class="button delete-button">Elimina</button>
+            </form>
+          </td>
         </tr>
       </tbody>
     </table>
