@@ -43,11 +43,12 @@ public class MenuController {
     /* ---------- FORM CREAZIONE (ADMIN) ------------------ */
     @GetMapping("/new")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String nuovoMenuForm(Model model) {
-        model.addAttribute("menu",   new Menu());
+    public String nuovoMenuForm(Model model){
+        model.addAttribute("menu", new Menu());
         model.addAttribute("piatti", piattoService.findAll());
-        return "menu/formMenu";                // templates/menu/formMenu.html
+        return "menu/new";               //  <-- cartella.menu + nome file
     }
+
 
     /* ---------- SALVATAGGIO MENU (ADMIN) ---------------- */
     @PostMapping
