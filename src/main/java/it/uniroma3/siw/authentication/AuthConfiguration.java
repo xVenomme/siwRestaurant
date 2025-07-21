@@ -53,6 +53,17 @@ public class AuthConfiguration {
 						.requestMatchers(HttpMethod.GET, "/recensioni").permitAll()
 						.requestMatchers(HttpMethod.POST, "/recensioni").permitAll()
 						
+						// può salvare la recensione chiunque sia loggato
+						.requestMatchers(HttpMethod.POST, "/reviews").authenticated()
+
+						// solo gli admin possono cancellare
+						.requestMatchers(HttpMethod.POST, "/reviews/*/delete").hasAuthority(User.ADMIN_ROLE)
+
+						.requestMatchers(HttpMethod.GET,  "/piatto/formPiatto").hasAuthority(User.ADMIN_ROLE)
+						.requestMatchers(HttpMethod.POST, "/piatto").hasAuthority(User.ADMIN_ROLE)
+
+
+					    
 						
 						.requestMatchers(HttpMethod.GET, "/login", "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/menuList").permitAll()

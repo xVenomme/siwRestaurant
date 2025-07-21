@@ -17,6 +17,9 @@ public class Piatto {
     @NotBlank
     private String nome;
 
+    private String photo;
+
+    
     @Lob
     private String descrizione;
 
@@ -73,6 +76,14 @@ public class Piatto {
 
 	public void setMenu(List<Menu> menu) {
 		this.menu = menu;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
     

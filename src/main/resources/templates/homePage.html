@@ -44,7 +44,9 @@
       <a href="#menu">Menù</a>
       <a href="#prenotazioni">Prenota</a>
       <a href="#recensioni">Recensioni</a>
-
+		
+	  
+	  
       <!-- Pulsanti visibili solo agli utenti NON autenticati -->
       <span sec:authorize="!isAuthenticated()">
         <a href="/login" class="button-ghost">Accedi</a>
@@ -68,21 +70,43 @@
     <section id="menu" class="container">
       <h2 class="page-title">I nostri Menù</h2>
       <section class="highlight">
+		
         <article class="card">
           <h3>Menù Adulti</h3>
           <p>Un percorso di sapori che esalta la cucina romana con un twist contemporaneo.</p>
           <a class="button" href="/menu/adulti">Scopri di più</a>
         </article>
         <article class="card">
-          <h3>Menù Bambini</h3>
-          <p>Piatti gustosi e bilanciati che faranno felici i più piccoli (e i genitori).</p>
-          <a class="button" href="/menu/bambini">Scopri di più</a>
+          <h3>Tutte le recensioni</h3>
+          <p>La tua opinione è la nostra priorità.</p>
+          <a class="button" href="/menu/recensioni">Scopri di più</a>
         </article>
         <article class="card">
-          <h3>Menù della Domenica</h3>
-          <p>La nostra selezione speciale per il pranzo festivo: tradizione, famiglia e convivialità.</p>
-          <a class="button" href="/menu/domenica">Scopri di più</a>
+          <h3>Lista dei nostri piatti</h3>
+          <p>La nostra selezione speciale: tradizione, famiglia e convivialità.</p>
+          <a class="button" href="/piatto/tuttiPiatti">Scopri di più</a>
         </article>
+		<article class="card">
+		          <h3>Carta dei Vini</h3>
+		          <p>La nostra selezione di Vini.</p>
+		          <a class="button" href="/menu/domenica">Scopri di più</a>
+		        </article>
+				
+			
+
+				<article class="card">
+				<span class="admin-buttons" sec:authorize="hasAuthority('ADMIN')">
+				<a href="/menuList"   class="button-ghost">Modifica Menu</a>
+				</span>			
+				</article>
+				<article class="card">
+								<span class="admin-buttons" sec:authorize="hasAuthority('ADMIN')">
+													        <a href="/piattoList" class="button-ghost">Modifica Piatti</a>
+													      </span>
+														  
+										        </article>
+
+				
       </section>
     </section>
 
@@ -110,6 +134,12 @@
             <span th:utext="${#strings.repeat('★', rev.rating)} + ${#strings.repeat('☆', 5 - rev.rating)}">★★★★★</span>
           </span>
           <span th:text="${rev.content}">Commento</span>
+		  <form class="admin-del" sec:authorize="hasAuthority('ADMIN')"
+		               th:action="@{'/reviews/' + ${rev.id} + '/delete'}" method="post"
+		               onsubmit="return confirm('Eliminare la recensione?');">
+		           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		           <button type="submit" class="btn btn-sm btn-outline-danger">Elimina</button>
+		         </form>
         </li>
       </ul>
 
