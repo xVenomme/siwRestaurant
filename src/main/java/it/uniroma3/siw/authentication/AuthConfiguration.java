@@ -64,7 +64,16 @@ public class AuthConfiguration {
 
 						.requestMatchers(HttpMethod.POST, "/piatto/*/delete").hasAuthority(User.ADMIN_ROLE)
 
-					    
+						.requestMatchers(HttpMethod.GET , "/prenota").permitAll()          // se vuoi il form pubblico
+						.requestMatchers(HttpMethod.POST, "/prenotazioni").permitAll()     // o .authenticated()
+
+						.requestMatchers(HttpMethod.GET , "/admin/prenotazioni").hasAuthority(User.ADMIN_ROLE)
+						.requestMatchers(HttpMethod.POST, "/admin/prenotazioni/**").hasAuthority(User.ADMIN_ROLE)
+
+						
+						.requestMatchers(HttpMethod.GET , "/prenotazioni/mie").authenticated()
+						.requestMatchers(HttpMethod.POST, "/prenotazioni/*/delete").authenticated()
+
 						
 						.requestMatchers(HttpMethod.GET, "/login", "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/menuList").permitAll()
