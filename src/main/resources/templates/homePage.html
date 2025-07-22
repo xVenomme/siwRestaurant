@@ -76,11 +76,7 @@
           <p>Un percorso di sapori che esalta la cucina romana con un twist contemporaneo.</p>
           <a class="button" href="/menu/lista">Scopri di più</a>
         </article>
-        <article class="card">
-          <h3>Tutte le recensioni</h3>
-          <p>La tua opinione è la nostra priorità.</p>
-          <a class="button" href="/menu/recensioni">Scopri di più</a>
-        </article>
+      
 		
         <article class="card">
           <h3>Lista dei nostri piatti</h3>
@@ -91,12 +87,14 @@
 	
 				<article class="card">
 				<span class="admin-buttons" sec:authorize="hasAuthority('ADMIN')">
-				<a href="/menuList"   class="button-ghost">Visualizza Prenotazioni</a>
+				<a href="/admin/listaPrenotazioni"   class="button btn btn-primary">Visualizza Prenotazioni</a>
 				</span>			
 				</article>
 				<article class="card">
 				</article>
 
+	
+				
 				
       </section>
     </section>
@@ -113,6 +111,7 @@
 	  <a class="button" href="/prenotazioni/mie"
 	     sec:authorize="isAuthenticated()">Le mie prenotazioni</a>
 	</section>
+
 
 
   <!-- Sezione recensioni dinamica -->

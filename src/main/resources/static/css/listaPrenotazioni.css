@@ -1,0 +1,61 @@
+/* src/main/resources/static/css/listaPrenotazioni.css */
+
+/* Tutto sotto .prenotazioni-page rimane isolato */
+.prenotazioni-page .bg-gradient-primary {
+  background: linear-gradient(90deg, #0062E6 0%, #33AEFF 100%) !important;
+}
+
+.prenotazioni-page .card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.prenotazioni-page .shadow-lg {
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2) !important;
+}
+
+.prenotazioni-page .card-header h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 2rem;
+}
+
+.prenotazioni-page .table thead.thead-dark th {
+  background-color: #23395d;
+  color: #ffffff;
+  border: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+}
+
+.prenotazioni-page .table-hover tbody tr:hover {
+  background: rgba(51, 174, 255, 0.1);
+}
+
+.prenotazioni-page .table td,
+.prenotazioni-page .table th {
+  vertical-align: middle;
+}
+
+.prenotazioni-page .btn-danger {
+  background-color: #E63946;
+  border-color: #E63946;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.prenotazioni-page .btn-danger:hover {
+  background-color: #D62839;
+  transform: translateY(-2px);
+}
+
+.prenotazioni-page .text-muted {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .prenotazioni-page .card-header h1 { font-size: 1.5rem; }
+  .prenotazioni-page .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+}

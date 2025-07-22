@@ -26,7 +26,6 @@ public class PrenotazioneService {
     public List<Prenotazione> findByUser(User u) {
         return repo.findByUser(u);
     }
+ 
 
-    /* (facoltativo) ultime n prenotazioni */
-    // public List<Prenotazione> findLatest(int n) { ... }
 }

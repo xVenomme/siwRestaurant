@@ -6,12 +6,16 @@ import it.uniroma3.siw.service.PrenotazioneService;
 import it.uniroma3.siw.service.UserService;
 
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PrenotazioneController {
@@ -82,4 +86,16 @@ public class PrenotazioneController {
         prenService.deleteById(id);
         return (ref != null) ? "redirect:" + ref : "redirect:/admin/prenotazioni";
     }
+    
+    
+    
+    
+    @GetMapping("/admin/listaPrenotazioni")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String listaPrenotazioni(Model model) {
+        model.addAttribute("prenotazioni", prenService.findAll());
+        return "admin/listaPrenotazioni";
+    }
+
+
 }

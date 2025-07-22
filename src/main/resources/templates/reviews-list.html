@@ -1,43 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8" />
   <title>Tutte le Recensioni</title>
   <link rel="stylesheet" href="/css/general.css" />
+  <!-- CSS specifico per questa pagina -->
+  <link rel="stylesheet" href="/css/listaRecensioni.css" />
 </head>
 <body>
   <div class="container reviews-page">
     <h1 class="page-title">Tutte le Recensioni</h1>
 
-    <table class="reviews-table">
-      <thead>
-        <tr>
-          <th>Utente</th>
-          <th>Titolo</th>
-          <th>Voto</th>
-          <th>Commento</th>
-          <th>Azioni</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="review : ${reviews}">
-          <td th:text="${review.user.username}">username</td>
-          <td th:text="${review.title}">Titolo recensione</td>
-          <td>
-            <span th:utext="${#strings.repeat('★', review.rating)} + ${#strings.repeat('☆', 5 - review.rating)}">★★★★★</span>
-          </td>
-          <td th:text="${review.content}">Testo recensione...</td>
-          <td sec:authorize="hasAuthority('ADMIN')">
-            <form th:action="@{'/reviews/' + ${review.id} + '/delete'}" method="post" 
-                  onsubmit="return confirm('Sei sicuro di eliminare questa recensione?');">
-              <button type="submit" class="button delete-button">Elimina</button>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Se ci sono recensioni, mostro la tabella -->
+    <div th:if="${!#lists.isEmpty(reviews)}">
+      <table class="reviews-table">
+        <thead>
+          <tr>
+            <th>Utente</th>
+            <th>Titolo</th>
+            <th>Voto</th>
+            <th>Commento</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="review : ${reviews}">
+            <td th:text="${review.user.username}">username</td>
+            <td th:text="${review.title}">Titolo recensione</td>
+            <td>
+              <!-- Stelle piene e vuote -->
+              <span th:utext="
+                ${#strings.repeat('★', review.rating)}
+                + ${#strings.repeat('☆', 5 - review.rating)}
+              ">★★★★★</span>
+            </td>
+            <td th:text="${review.content}">Testo recensione...</td>
+            <td class="text-center" sec:authorize="hasAuthority('ADMIN')">
+              <form th:action="@{'/reviews/' + ${review.id} + '/delete'}"
+                    method="post"
+                    onsubmit="return confirm('Sei sicuro di eliminare questa recensione?');">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+                <button type="submit" class="button delete-button">Elimina</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="reviews-actions">
+    <!-- Se la lista è vuota, mostro solo questo messaggio -->
+    <div th:if="${#lists.isEmpty(reviews)}"
+         class="text-center text-muted py-5">
+      Non ci sono recensioni.
+    </div>
+
+    <div class="reviews-actions mt-4">
       <a class="button" th:href="@{/}">← Torna alla Home</a>
     </div>
   </div>
