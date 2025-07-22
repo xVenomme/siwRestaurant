@@ -1,20 +1,20 @@
 body {
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #e0e7ef 0%, rgb(128, 128, 255) 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #e6e9ec 100%);
     margin: 0;
     padding: 0;
-    color: #23272f;
+    color: #2c2c2c;
     min-height: 100vh;
     margin-left: 40px;
     margin-right: 40px;
 }
 
 .site-header {
-    background: linear-gradient(90deg, #2d3e50 60%, #3b82f6 100%);
-    color: #fff;
+    background: linear-gradient(90deg, rgb(0, 0, 0) 60%, rgb(255, 128, 0) 100%);
+    color: #ffffff;
     padding: 1.2rem 0;
     align-items: center;
-    box-shadow: 0 4px 18px rgba(44,62,80,0.10);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
     position: relative;
     height: 270px;
     border-radius: 0 0 10px 10px;
@@ -22,45 +22,44 @@ body {
 }
 
 a {
-    color: rgb(0, 0, 0);
+    color: #4c4c4c;
     text-decoration: none;
     font-weight: 600;
     font-size: 1.08rem;
     letter-spacing: 0.02em;
     border-radius: 8px;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    transition: color 0.18s;
     margin-left: 20px;
     margin-right: 20px;
 }
 
-a:focus, a:hover {
-    outline: none;
+a:focus,
+a:hover {
+    color: #000000;
     background: none;
-    color: inherit;
-    box-shadow: none;
 }
 
 .container {
     max-width: 600px;
     margin: auto;
-    background: rgba(255,255,255,0.95);
-    border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(44,62,80,0.13);
-    padding: 3rem 2.5rem 2.5rem 2.5rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    padding: 3rem 2.5rem;
     text-align: center;
     backdrop-filter: blur(2px);
     margin-bottom: 20px;
 }
 
 h1 {
-    color: #2d3e50;
+    color: #000000;
     margin-bottom: 1.5rem;
     font-size: 2.3rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.03em;
-    border-bottom: 2px solid #e0e4ea;
+    border-bottom: 2px solid #e2e5e8;
     padding-bottom: 10px;
-    background: linear-gradient(90deg, rgb(128, 128, 255) 0%, rgb(0, 0, 0) 100%);
+    background: linear-gradient(90deg, #2b2f36 0%, #000000 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -74,26 +73,19 @@ ul {
 li {
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(90deg, #f1f3f7 80%, #e0e7ef 100%);
+    background: #f5f7fa;
     margin-bottom: 14px;
     padding: 18px 22px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(44,62,80,0.06);
-    transition: background 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
     position: relative;
     overflow: hidden;
 }
 
-li span{
+li span {
     display: block;
 }
-
-/*
-li:hover {
-    background: linear-gradient(90deg, #e6e9f0 80%, #c7d2fe 100%);
-    box-shadow: 0 4px 18px rgba(59,130,246,0.10);
-}
-*/
 
 .empty-msg {
     color: #b91c1c;
@@ -103,7 +95,7 @@ li:hover {
     margin-bottom: 22px;
     font-size: 1.12rem;
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(185,28,28,0.07);
+    box-shadow: 0 2px 8px rgba(185, 28, 28, 0.07);
 }
 
 .logo {
@@ -114,33 +106,36 @@ li:hover {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
     object-fit: cover;
-    background: #e0e7ef;
+    background: #f0f2f5;
     padding: 10px;
     aspect-ratio: 1 / 1;
 }
 
-.logo:focus, .logo:hover {
+
+
+.logo:focus,
+.logo:hover {
     outline: none;
     box-shadow: none;
     background: transparent;
 }
 
-.outer-logo-wrapper{
+.outer-logo-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.inner-logo-wrapper{
+.inner-logo-wrapper {
     width: fit-content;
     height: fit-content;
 }
 
-.button{
-    background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
-    color: #fff;
+.button {
+    background: linear-gradient(90deg, #2b2f36 60%, #464c55 100%);
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     font-size: 1.08rem;
@@ -152,12 +147,12 @@ li:hover {
     transition: background 0.18s, box-shadow 0.18s;
 }
 
-.button:hover{
-    background: linear-gradient(90deg, #2563eb 60%, #3b82f6 100%);
-    box-shadow: 0 4px 16px rgba(59,130,246,0.13);
+.button:hover {
+    background: linear-gradient(90deg, #1f2227 60%, #2b2f36 100%);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
-.page-title{
+.page-title {
     margin-left: 40px;
     margin-right: 40px;
 }
@@ -166,13 +161,16 @@ li:hover {
     .container {
         padding: 1.5rem 0.7rem;
     }
+
     .logo {
         width: 60px;
         height: 60px;
     }
+
     h1 {
         font-size: 1.5rem;
     }
+
     li {
         flex-direction: column;
         align-items: flex-start;

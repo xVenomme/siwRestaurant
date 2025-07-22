@@ -2,7 +2,7 @@
 
 /* Tutto sotto .prenotazioni-page rimane isolato */
 .prenotazioni-page .bg-gradient-primary {
-  background: linear-gradient(90deg, #0062E6 0%, #33AEFF 100%) !important;
+  background: linear-gradient(90deg, rgb(64, 0, 64) 0%, rgb(192, 192, 192) 100%) !important;
 }
 
 .prenotazioni-page .card {
@@ -32,7 +32,7 @@
 }
 
 .prenotazioni-page .table-hover tbody tr:hover {
-  background: rgba(51, 174, 255, 0.1);
+  background: rgb(192, 192, 192);
 }
 
 .prenotazioni-page .table td,
