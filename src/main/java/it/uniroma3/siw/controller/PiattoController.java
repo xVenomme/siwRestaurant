@@ -40,7 +40,7 @@ public class PiattoController {
     }
     
     @PostMapping("/{id}/delete")
-    @PreAuthorize("hasAuthority('ADMIN_ROLE')")   // o il tuo ruolo reale
+    @PreAuthorize("hasAuthority('ADMIN')")   // o il tuo ruolo reale
     public String deletePiatto(@PathVariable Long id,
                                @RequestHeader(value = "Referer", required = false) String ref) {
 
@@ -55,5 +55,44 @@ public class PiattoController {
         model.addAttribute("piatti", piattoService.findAll());
         return "piatto/listaPiatto";            // <-- cartella inclusa
     }
+    
+    
+  
+    
+
+    @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAuthority('ADMIN_ROLE')")
+    public String updatePiatto(@PathVariable Long id,
+                               @Valid @ModelAttribute Piatto piatto,
+                               BindingResult bindingResult,
+                               @RequestParam("imageFile") MultipartFile file) throws IOException {
+    	System.out.println("Modifica invocata");
+    	System.out.println("Modifica invocata");
+        if (bindingResult.hasErrors()) {
+            return "piatto/formPiatto";
+        }
+
+        piatto.setId(id); // Assicurati che l'ID venga riapplicato
+        piattoService.updateWithImage(piatto, file); // Devi implementare questa logica nel service
+        return "redirect:/piatto/tuttiPiatti";
+    }
+    
+    @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAuthority('ADMIN_ROLE')")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Piatto piatto = piattoService.findById(id);
+        if (piatto == null) {
+            return "redirect:/piatto/tuttiPiatti";
+        }
+
+        model.addAttribute("piatto", piatto);
+        return "piatto/formPiatto";
+    }
+
+
+
+    
+    
+    
 }
 

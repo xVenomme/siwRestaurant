@@ -53,7 +53,9 @@ public class AuthConfiguration {
 						.requestMatchers(HttpMethod.GET, "/recensioni").permitAll()
 						.requestMatchers(HttpMethod.POST, "/recensioni").permitAll()
 						
-						
+						.requestMatchers(HttpMethod.GET,  "/piatto/*/edit").hasAuthority(User.ADMIN_ROLE)
+						.requestMatchers(HttpMethod.POST, "/piatto/*/edit").hasAuthority(User.ADMIN_ROLE)
+
 						
 						// può salvare la recensione chiunque sia loggato
 						.requestMatchers(HttpMethod.POST, "/reviews").authenticated()

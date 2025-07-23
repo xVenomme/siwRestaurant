@@ -1,0 +1,86 @@
+almeno uno che richieda operazioni di inserimento dei dati di una entità
+almeno uno che richieda aggiornamento (update) dei dati di una entità
+almeno uno che richieda cancellazione di una (o più) entità entità
+almeno due che richiedano operazioni di lettura dei dati di una o più entità 
+
+
+
+
+
+UC1: Inserimento Piatto
+Scenario principale di successo
+Attore principale: Amministratore
+    1. L'Amministratore effettua il login
+    2. L'Amministratore esegue l'operazione /piatto/tuttiPiatti
+    3. L'Amministratore esegue l'operazione cliccando sul bottone "+ Nuovo Piatto"
+    4. L'Amministratore esegue l'operazione /piatto/formPiatto
+    5. L'Amministratore inserisce i dati del nuovo libro e conferma
+
+UC2: Aggiunta Menu
+Scenario principale di successo
+Attore principale: Amministratore
+    1. L'Amministratore effettua il login
+    2. L'Amministratore esegue l'operazione /menu/lista
+    3. L'Amministratore esegue l'operazione cliccando sul bottone "aggiungi Menu"
+    4. L'Amministratore esegue l'operazione /menu/new
+    5. L'Amministratore inserisce i dati relativi al nuovo Menu e conferma
+
+UC3: Inserimento Autore
+Scenario principale di successo
+Attore principale: Amministratore
+    1. L'Amministratore effettua il login
+    2. L'Amministratore esegue l'operazione /admin/authorList
+    3. L'Amministratore esegue l'operazione cliccando sul bottone "aggiungi Autore"
+    4. L'Amministratore esegue l'operazione /admin/authorForm
+    5. L'Amministratore inserisce i dati del nuovo autore e conferma
+
+UC4: Inserimento Recensione
+Scenario principale di successo
+Attore Principale: Utente Registrato
+    1. L'Utente Registrato effettua il login
+    2. L'Utente Registrato esegue l'operazione /reviews/new
+    3. L'Utente Registrato inserisce i dati della recensione e conferma
+
+
+UC5: Inserimento Prenotazione
+Scenario principale di successo
+Attore Principale: Utente Registrato
+    1. L'Utente Registrato effettua il login
+    2. L'Utente Registrato esegue l'operazione /prenota
+    3. L'Utente Registrato inserisce i dati della recensione e conferma
+
+UC5: Visione Menu
+Scenario principale di successo
+Attore Principale: Utente Registrato
+    1. L'Utente Registrato effettua il login
+    2. L'Utente Registrato esegue l'operazione /menu/lista
+
+UC6: Visione Autori
+Scenario principale di successo
+Attore Principale: Utente Registrato
+    1. L'Utente Registrato effettua il login
+    2. L'Utente Registrato esegue l'operazione /authorList
+
+UC7: Visione Piatti
+Scenario principale di successo
+Attore Principale: Utente
+    1. L'Utente esegue l'operazione /piatto/tuttiPiatti
+
+UC8: Visione Autori
+Scenario principale di successo
+Attore Principale: Utente
+    1. L'Utente esegue l'operazione /authorList
+
+UC9: Registrazione
+Scenario principale di successo
+Attore Principale: Utente
+    1. L'Utente esegue l'operazione /register
+    2. L'Utente inserisce i propri dati e conferma
+    
+UC10: Aggiornamento piatto
+Scenario principale di successo
+Attore Principale: Amministratore
+    1. L'Amministratore esegue l'operazione /login
+    2. L'Amministratore esegue l'operazione piatto/tuttiPiatti
+    2. L'Amministratore esegue l'operazione piatto/tuttiPiatti
+    
