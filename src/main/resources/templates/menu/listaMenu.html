@@ -37,7 +37,7 @@
       </div>
 
       <div class="text-right mt-3 mt-md-0">
-        <a th:href="@{/menu/{id}(id=${menu.id})}" class="btn btn-primary btn-sm">Dettagli</a>
+        <a th:href="@{/menu/{id}(id=${menu.id})}" class="btn btn-secondary btn-sm">Dettagli</a>
 
         <!-- azioni admin -->
         <span sec:authorize="hasAuthority('ADMIN')">
