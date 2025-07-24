@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vieni a Trovarci!</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/mappa.css}">
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🗺️ Trova il ristorante più vicino a te!</h1>
+    <p>Autorizza l'accesso alla tua posizione per visualizzare la mappa:</p>
+
+    <div id="map"></div>
+
+    <a th:href="@{/}" class="btn">⬅️ Torna alla Home</a>
+</div>
+
+<script>
+    let map;
+
+    function initMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userPos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        center: userPos,
+                        zoom: 11
+                    });
+
+                    new google.maps.Marker({
+                        position: userPos,
+                        map,
+                        title: "📍 Sei qui!",
+                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                    });
+
+                    // Marker fissi per i ristoranti
+                    const ristoranti = [
+                        {
+                            nome: "SeaVibes",
+                            posizione: { lat: 41.7286, lng: 12.2855 },
+                            indirizzo: "📍 Via del Mare, Ostia"
+                        },
+                        {
+                            nome: "Di Certo's Creations",
+                            posizione: { lat: 41.77677, lng: 12.35865 },
+                            indirizzo: "📍 Via Gino Bonichi, Acilia"
+                        },
+                        {
+                            nome: "Pasticceria Da Tatta",
+                            posizione: { lat: 41.74547, lng: 12.35988 },
+                            indirizzo: "📍 Via Pier Alessandro Guglielmi 84, Infernetto"
+                        }
+                    ];
+
+                    // Funzione distanza in km
+                    function haversineDistance(pos1, pos2) {
+                        function toRad(x) { return x * Math.PI / 180; }
+                        const R = 6371;
+                        const dLat = toRad(pos2.lat - pos1.lat);
+                        const dLon = toRad(pos2.lng - pos1.lng);
+                        const a = Math.sin(dLat / 2) ** 2 +
+                                  Math.cos(toRad(pos1.lat)) * Math.cos(toRad(pos2.lat)) *
+                                  Math.sin(dLon / 2) ** 2;
+                        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                        return R * c;
+                    }
+
+                    let nearest = null;
+                    let nearestDistance = Infinity;
+
+                    ristoranti.forEach(r => {
+                        const distanza = haversineDistance(userPos, r.posizione);
+                        if (distanza < nearestDistance) {
+                            nearestDistance = distanza;
+                            nearest = r;
+                        }
+
+                        const marker = new google.maps.Marker({
+                            position: r.posizione,
+                            map,
+                            title: r.nome,
+                            icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                        });
+
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `<strong>${r.nome}</strong><br>${r.indirizzo}<br>📏 ${distanza.toFixed(2)} km`
+                        });
+
+                        marker.addListener("click", () => infoWindow.open(map, marker));
+                    });
+
+                    // Marker verde per il più vicino
+					if (nearest) {
+					    const greenMarker = new google.maps.Marker({
+					        position: nearest.posizione,
+					        map,
+					        title: `${nearest.nome} (ristorante più vicino)`,
+					        icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+					    });
+
+					    const greenInfoWindow = new google.maps.InfoWindow({
+					        content: `<strong>${nearest.nome}</strong><br>${nearest.indirizzo}<br>📏 ${nearestDistance.toFixed(2)} km`
+					    });
+
+					    greenMarker.addListener("click", () => greenInfoWindow.open(map, greenMarker));
+					}
+
+                },
+                () => {
+                    alert("Autorizzazione negata alla geolocalizzazione.");
+                }
+            );
+        } else {
+            alert("Geolocalizzazione non supportata.");
+        }
+    }
+</script>
+
+<!-- Google Maps API -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAM2NEx_NKcH9UAZikMe_QFYHHVTQ31jcs&callback=initMap">
+</script>
+
+</body>
+</html>
